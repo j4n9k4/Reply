@@ -42,14 +42,19 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
+import com.example.reply.ui.theme.ReplyTheme
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.runtime.collectAsState
 
 @Composable
 fun ReplyDetailsScreen(
@@ -294,5 +299,15 @@ private fun ActionButton(
                 }
             )
         }
+    }
+}
+@Preview
+@Composable
+fun ReplyDetailsPreview()
+{
+    val viewModel: ReplyViewModel = viewModel()
+    val replyUiState = viewModel.uiState.collectAsState().value
+    ReplyTheme {
+        ReplyDetailsScreen(replyUiState, {})
     }
 }
