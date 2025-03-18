@@ -15,6 +15,7 @@
  */
 package com.example.reply.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -86,6 +87,7 @@ fun ReplyListOnlyContent(
     }
 }
 
+@SuppressLint("ContextCastToActivity")
 @Composable
 fun ReplyListAndDetailContent(
     replyUiState: ReplyUiState,
@@ -122,7 +124,7 @@ fun ReplyListAndDetailContent(
             modifier = Modifier
                 .padding(top = dimensionResource(R.dimen.email_list_item_vertical_spacing))
                 .weight(1f),
-            onBackPressed = {}
+            onBackPressed = {activity.finish()}
         )
     }
 }
