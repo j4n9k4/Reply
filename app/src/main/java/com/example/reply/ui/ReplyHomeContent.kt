@@ -35,7 +35,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -129,7 +128,6 @@ fun ReplyListAndDetailContent(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ReplyEmailListItem(
     email: Email,

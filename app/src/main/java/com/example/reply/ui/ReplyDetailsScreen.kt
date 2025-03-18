@@ -52,12 +52,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.reply.R
 import com.example.reply.data.Email
 import com.example.reply.data.MailboxType
 import com.example.reply.ui.theme.ReplyTheme
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.compose.runtime.collectAsState
 
 @Composable
 fun ReplyDetailsScreen(
