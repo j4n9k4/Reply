@@ -100,6 +100,7 @@ fun ReplyHomeScreen(
                 PermanentDrawerSheet(
                     Modifier.width(dimensionResource(R.dimen.drawer_width))
                         .fillMaxHeight()
+                        .testTag(stringResource(R.string.navigation_drawer))
                 ){
                     NavigationDrawerContent(
                         selectedDestination = replyUiState.currentMailbox,
