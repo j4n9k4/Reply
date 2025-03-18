@@ -15,6 +15,7 @@
  */
 package com.example.reply.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -113,8 +114,8 @@ fun ReplyHomeScreen(
         ) {
             ReplyAppContent(
                 replyUiState = replyUiState,
+                navigationType = navigationType,
                 onTabPressed = onTabPressed,
-                bottomNavigationOn = false,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
                 modifier = modifier
@@ -125,8 +126,8 @@ fun ReplyHomeScreen(
         if(replyUiState.isShowingHomepage) {
             ReplyAppContent(
                 replyUiState = replyUiState,
+                navigationType = navigationType,
                 onTabPressed = onTabPressed,
-                bottomNavigationOn = true,
                 onEmailCardPressed = onEmailCardPressed,
                 navigationItemContentList = navigationItemContentList,
                 modifier = modifier
@@ -145,7 +146,7 @@ fun ReplyHomeScreen(
 @Composable
 private fun ReplyAppContent(
     replyUiState: ReplyUiState,
-    bottomNavigationOn: Boolean,
+    navigationType: ReplyNavigationType,
     onTabPressed: ((MailboxType) -> Unit),
     onEmailCardPressed: (Email) -> Unit,
     navigationItemContentList: List<NavigationItemContent>,
@@ -153,38 +154,47 @@ private fun ReplyAppContent(
 ) {
     Box(modifier = modifier) {
         val navigationRailContentDescription = stringResource(R.string.navigation_rail)
-        ReplyNavigationRail(
-            currentTab = replyUiState.currentMailbox,
-            onTabPressed = onTabPressed,
-            navigationItemContentList = navigationItemContentList,
-            modifier = Modifier
-                .testTag(navigationRailContentDescription)
-        )
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.inverseOnSurface)
-        ) {
-            ReplyListOnlyContent(
-                replyUiState = replyUiState,
-                onEmailCardPressed = onEmailCardPressed,
-                modifier = Modifier.weight(1f)
-                    .padding(
-                        horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
-                    )
-            )
-            val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
-            if(bottomNavigationOn) {
+        Row {
+            AnimatedVisibility(visible = navigationType == ReplyNavigationType.NAVIGATION_RAIL) {
 
-                ReplyBottomNavigationBar(
+                ReplyNavigationRail(
                     currentTab = replyUiState.currentMailbox,
                     onTabPressed = onTabPressed,
                     navigationItemContentList = navigationItemContentList,
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .testTag(navigationRailContentDescription)
                 )
             }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.inverseOnSurface)
+            ) {
+                ReplyListOnlyContent(
+                    replyUiState = replyUiState,
+                    onEmailCardPressed = onEmailCardPressed,
+                    modifier = Modifier.weight(1f)
+                        .padding(
+                            horizontal = dimensionResource(R.dimen.email_list_only_horizontal_padding)
+                        )
+                )
+                val bottomNavigationContentDescription = stringResource(R.string.navigation_bottom)
+
+                AnimatedVisibility(visible = navigationType == ReplyNavigationType.BOTTOM_NAVIGATION) {
+                    ReplyBottomNavigationBar(
+                        currentTab = replyUiState.currentMailbox,
+                        onTabPressed = onTabPressed,
+                        navigationItemContentList = navigationItemContentList,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+
+                }
+
+            }
         }
+
     }
 }
 
